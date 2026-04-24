@@ -38,11 +38,11 @@
       }
 
       document.getElementById('btn-java').addEventListener('click', async () => {
-        await callEndpoint('out-java', 'http://localhost:8084/hello');
+        await callEndpoint('out-java', 'http://192.168.50.201:8084/hello');
       });
 
       document.getElementById('btn-python').addEventListener('click', async () => {
-        await callEndpoint('out-python', 'http://localhost:5001/');
+        await callEndpoint('out-python', 'http://192.168.50.201:5001/');
       });
     </script>
   </body>
