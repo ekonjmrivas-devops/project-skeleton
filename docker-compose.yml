@@ -111,7 +111,25 @@ services:
   #     - "<puerto host>:<puerto contenedor>"
   #   networks:
   #     - training_net
-
+  backend-python:
+    build:
+      context: ./backend-python
+      dockerfile: devops/Dockerfile
+    image: training-python-api:0.1
+    pull_policy: never
+    depends_on:
+      - db
+      - ddl_job
+    environment:
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_NAME: trainingdb
+      DB_USER: training
+      DB_PASSWORD: trainingpwd
+    ports:
+      - "5001:5000"
+    networks:
+      - training_net
   # TODO ejercicio 5:
   # Crear el servicio webui a partir de estas pistas.
   #
@@ -127,7 +145,19 @@ services:
   #     - "<puerto host>:<puerto contenedor>"
   #   networks:
   #     - training_net
-
+  webui:
+    build:
+      context: ./webui
+      dockerfile: Dockerfile
+    image: training-webui:0.1
+    pull_policy: never
+    depends_on:
+      - backend-java
+      - backend-python
+    ports:
+      - "8080:80"
+    networks:
+      - training_net
   # TODO ejercicio opcional:
   # - Descomentar este servicio
   # - Levantar un registry privado para publicar imagenes del laboratorio
