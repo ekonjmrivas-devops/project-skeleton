@@ -78,7 +78,18 @@ services:
   #     - "<puerto host>:<puerto contenedor>"
   #   networks:
   #     - training_net
-
+  backend-java:
+    build:
+      context: ./backend-java
+      dockerfile: devops/Dockerfile
+      args:
+        VERSION: "1.0.4-SNAPSHOT"
+    image: training-java-api:0.1
+    pull_policy: never
+    ports:
+      - "8084:8080"
+    networks:
+      - training_net
   # TODO ejercicio 4:
   # Crear el servicio backend-python a partir de estas pistas.
   #
